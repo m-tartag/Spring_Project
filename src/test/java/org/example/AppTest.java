@@ -2,16 +2,18 @@ package org.example;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Unit test for simple App.
  */
 public class AppTest {
+
     @Test
     public void test1() {
         System.setProperty("webdriver.chrome.driver", "/Users/mtartaglia/Desktop/Java/Assets/chromedriver");
@@ -19,28 +21,37 @@ public class AppTest {
         driver.get("https://login.yahoo.com/");
         driver.manage().window().maximize();
 
-        // Locate Login + Submit Username + Click Next
-        try {
 
-            driver.findElement(By.id("login-username")).sendKeys("matt.tester24");
-            driver.findElement(By.id("login-signin")).submit();
+        // Username Input
 
+        WebElement userEntry = driver.findElement(By.id("login-username"));
 
-            //send password
-            WebElement passwordButton = driver.findElement(By.id("login-passwd"));
-            WebDriverWait WAIT = new WebDriverWait(driver, 30);
-            WAIT.until(ExpectedConditions.elementToBeClickable(passwordButton));
-            passwordButton.sendKeys("112233aabbcc");
-            driver.findElement(By.xpath("login-signin")).click();
+        userEntry.sendKeys("matt.tester24");
+        userEntry.submit();
 
-//            driver.findElement(By.id("login-passwd")).sendKeys("112233aabbcc");
-//            driver.findElement(By.id("login-signin")).click();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
-        } finally {
+        // Password Input
 
-            System.out.println(driver.getTitle());
-        }
+        WebElement passEntry = driver.findElement(By.id("login-passwd"));
+
+        passEntry.sendKeys("112233aabbcc");
+        passEntry.sendKeys(Keys.ENTER);
+
+        // Navigate to Finance -> My Portfolio
+
+        driver.get("https://finance.yahoo.com/portfolio/p_1/view");
+
+        // Target Table via "tbody" + Get Raw Text
+
+        WebElement tableData = driver.findElement(By.tagName("tbody"));
+        System.out.println(tableData.getText());
+
 
     }
+
 }
+
+
+
 
