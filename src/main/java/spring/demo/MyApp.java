@@ -8,6 +8,7 @@ public class MyApp {
 
         Coach coachOne = new BaseballCoach();
         Coach coachTwo = new TrackCoach();
+        Coach coachThree = new BasketballCoach();
 
         // use the object
 
