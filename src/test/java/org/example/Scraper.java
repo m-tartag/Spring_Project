@@ -25,7 +25,7 @@ public class Scraper {
     }
 
     public void login() {
-        String URL = "https://finance.yahoo.com/portfolio/p_1/view";
+        String URL = "https://login.yahoo.com";
         String email = "matt.tester24";
         String password = "112233aabbcc";
 
