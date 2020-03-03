@@ -5,5 +5,6 @@ public class App {
         Scraper scraper = new Scraper();
         scraper.login();
         scraper.scrapeData();
+        scraper.quitDriver();
     }
 }

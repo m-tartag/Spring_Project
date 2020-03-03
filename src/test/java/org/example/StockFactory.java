@@ -2,14 +2,14 @@ package org.example;
 
 public class StockFactory {
 
-    public String symbol;
-    public String lastPrice;
-    public String currency;
-    public String changeDollars;
-    public String changePercent;
-    public String volume;
-    public String averageVolume;
-    public String marketCap;
+    private String symbol;
+    private String lastPrice;
+    private String currency;
+    private String changeDollars;
+    private String changePercent;
+    private String volume;
+    private String averageVolume;
+    private String marketCap;
 
     public String getSymbol() {
         return symbol;
@@ -74,4 +74,16 @@ public class StockFactory {
     public void setMarketCap(String marketCap) {
         this.marketCap = marketCap;
     }
+    public void stockReport() {
+        System.out.println("Symbol: " + this.symbol);
+        System.out.println("Currency: " + this.currency);
+        System.out.println("Last Price: " + this.lastPrice);
+        System.out.println("Dollar Change: " + this.changeDollars);
+        System.out.println("Percent Change: " + this.changePercent);
+        System.out.println("Volume: " + this.volume);
+        System.out.println("Avg Volume: " + this.averageVolume);
+        System.out.println("Market Cap: " + this.marketCap);
+        System.out.println("----------------");
+    }
 }
+

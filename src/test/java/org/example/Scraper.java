@@ -37,11 +37,14 @@ public class Scraper {
         driver.manage().window().maximize();
 
         WebElement userEntry = driver.findElement(By.id("login-username"));
-        userEntry.sendKeys(email + Keys.ENTER);
+        userEntry.sendKeys(email + Keys.RETURN);
+
+//        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
 
         WebElement passEntry = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(By.id("login-passwd")));
-        passEntry.sendKeys(password + Keys.ENTER);
+        passEntry.sendKeys(password + Keys.RETURN);
+
     }
 
     // Scrape Method
@@ -69,6 +72,8 @@ public class Scraper {
             String[] splitStock = soloStock[0].split("\\r?\\n");
             String[] splitCap = soloStock[9].split("\\r?\\n");
 
+            // Instantiate Stock Objects
+
             StockFactory stock = new StockFactory();
             stock.setSymbol(splitStock[0]);
             stock.setLastPrice(splitStock[1]);
@@ -79,15 +84,10 @@ public class Scraper {
             stock.setAverageVolume(soloStock[8]);
             stock.setMarketCap(splitCap[0]);
 
-            System.out.println(stock.symbol);
-            System.out.println(stock.lastPrice);
-            System.out.println(stock.currency);
-            System.out.println(stock.changeDollars);
-            System.out.println(stock.changePercent);
-            System.out.println(stock.volume);
-            System.out.println(stock.averageVolume);
-            System.out.println(stock.marketCap);
-            System.out.println("--------------------");
+
+            // Method to Print Stocks to Console - Debugging
+
+            stock.stockReport();
 
         }
 
