@@ -92,6 +92,12 @@ public class Scraper {
 
     }
 
+    // Method to Send Stock Info to MySQL DB
+
+    public void addScrapeToDatabase(StockFactory stock)  {
+        String query = "insert into stock (symbol, last_price, currency, change_dollars, change_percent, volume, average_volume, market_cap)" + "values (?, ?, ?, ?, ?, ?, ?, ?)";
+    }
+
     // Quit Driver
 
     public void quitDriver() {
