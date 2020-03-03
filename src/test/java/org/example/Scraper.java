@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class Scraper {
 
     // Instance Variables
@@ -52,8 +54,7 @@ public class Scraper {
         WebElement tableData = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(By.tagName("table")));
 
-        System.out.println(tableData.getText());
-
+//        System.out.println(tableData.getText());
 
 //        List<WebElement> row = tableData.findElements(By.tagName("td"));
 //        for (WebElement e : row) {
@@ -62,6 +63,21 @@ public class Scraper {
 //
 //            }
 //        }
+
+        // Isolate Table
+
+        WebElement scrapeTable = driver.findElement(By.tagName("tbody"));
+
+        // Isolate Rows in Table
+
+        List<WebElement> scrapeRows = scrapeTable.findElements(By.className("simpTblRow"));
+
+        for (WebElement row : scrapeRows) {
+
+            System.out.println(row.getText());
+            System.out.println("----");
+
+        }
 
     }
 
