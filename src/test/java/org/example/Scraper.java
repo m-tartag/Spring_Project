@@ -84,8 +84,7 @@ public class Scraper {
             stock.setAverageVolume(soloStock[8]);
             stock.setMarketCap(splitCap[0]);
 
-
-            // Method to Print Stocks to Console - Debugging
+            // Method to Print Stocks to Console
 
             stock.stockReport();
 
