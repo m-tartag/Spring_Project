@@ -24,12 +24,14 @@ public class Scraper {
         this.driver = new ChromeDriver();
     }
 
+    // Login Method
+
     public void login() {
-        String URL = "https://login.yahoo.com";
+        String loginURL = "https://login.yahoo.com";
         String email = "matt.tester24";
         String password = "112233aabbcc";
 
-        driver.get(URL);
+        driver.get(loginURL);
         driver.manage().window().maximize();
 
         WebElement userEntry = driver.findElement(By.id("login-username"));
@@ -38,6 +40,35 @@ public class Scraper {
         WebElement passEntry = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(By.id("login-passwd")));
         passEntry.sendKeys(password + Keys.ENTER);
+    }
+
+    // Scrape Method
+
+    public void scrapeData() {
+
+        // Navigate to Yahoo Finance
+
+        driver.get("https://finance.yahoo.com/portfolio/p_1/view");
+        WebElement tableData = new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.elementToBeClickable(By.tagName("table")));
+
+        System.out.println(tableData.getText());
+
+
+//        List<WebElement> row = tableData.findElements(By.tagName("td"));
+//        for (WebElement e : row) {
+//            if (e.getText().length() != 0) {
+//                System.out.println(e.getText());
+//
+//            }
+//        }
+
+    }
+
+    // Quit Driver
+
+    public void quitDriver() {
+        driver.quit();
     }
 
 }
