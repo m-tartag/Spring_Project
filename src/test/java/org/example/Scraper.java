@@ -8,6 +8,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Scraper {
@@ -17,6 +20,7 @@ public class Scraper {
     String webDriver;
     String webDriverPath;
     WebDriver driver;
+    Connection conn = null;
 
     // Constructor
 
@@ -24,6 +28,15 @@ public class Scraper {
         this.webDriver = "webdriver.chrome.driver";
         this.webDriverPath = "\"/Users/mtartaglia/Desktop/Java/Assets/chromedriver";
         this.driver = new ChromeDriver();
+
+        // Connect to DB
+
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crypto", "admin", "admin");
+            System.out.println("SQL Connection to database established!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Login Method
@@ -66,23 +79,21 @@ public class Scraper {
 
         for (WebElement row : scrapeRows) {
 
-            // Isolate Stock and Fields (necessary to split on front & back of row due to way data is coupled)
+            // Isolate Stock and Associated Fields
 
-            String[] soloStock = row.getText().split(" ");
-            String[] splitStock = soloStock[0].split("\\r?\\n");
-            String[] splitCap = soloStock[9].split("\\r?\\n");
+            String[] soloStock = row.getText().replaceAll("\\R+", " ").split(" ");
 
             // Instantiate Stock Objects
 
             StockFactory stock = new StockFactory();
-            stock.setSymbol(splitStock[0]);
-            stock.setLastPrice(splitStock[1]);
-            stock.setCurrency(soloStock[3]);
-            stock.setChangeDollars(soloStock[1]);
-            stock.setChangePercent(soloStock[2]);
-            stock.setVolume(soloStock[6]);
-            stock.setAverageVolume(soloStock[8]);
-            stock.setMarketCap(splitCap[0]);
+            stock.setSymbol(soloStock[0]);
+            stock.setLastPrice(soloStock[1]);
+            stock.setCurrency(soloStock[4]);
+            stock.setChangeDollars(soloStock[2]);
+            stock.setChangePercent(soloStock[3]);
+            stock.setVolume(soloStock[7]);
+            stock.setAverageVolume(soloStock[9]);
+            stock.setMarketCap(soloStock[10]);
 
             // Method to Print Stocks to Console (Debugging)
 
