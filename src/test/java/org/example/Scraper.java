@@ -55,18 +55,18 @@ public class Scraper {
 
         driver.get("https://finance.yahoo.com/portfolio/p_1/view");
 
-        // Isolate Table
+        // Isolate Table within My Portfolio
 
         WebElement scrapeTable = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(By.tagName("tbody")));
 
-        // Isolate Rows in Table
+        // Locate Rows of Table and populate List
 
         List<WebElement> scrapeRows = scrapeTable.findElements(By.className("simpTblRow"));
 
         for (WebElement row : scrapeRows) {
 
-            // Isolate Stock and Fields
+            // Isolate Stock and Fields (necessary to split on front & back of row due to way data is coupled)
 
             String[] soloStock = row.getText().split(" ");
             String[] splitStock = soloStock[0].split("\\r?\\n");
@@ -84,7 +84,7 @@ public class Scraper {
             stock.setAverageVolume(soloStock[8]);
             stock.setMarketCap(splitCap[0]);
 
-            // Method to Print Stocks to Console
+            // Method to Print Stocks to Console (Debugging)
 
             stock.stockReport();
 
