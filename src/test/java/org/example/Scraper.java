@@ -130,6 +130,13 @@ public class Scraper {
 
     }
 
+//    public void Testing() {
+//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//
+//        session.beginTransaction();
+//    }
+
+
 
     // Quit Driver
 
