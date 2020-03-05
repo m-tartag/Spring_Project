@@ -20,7 +20,6 @@ public class Scraper {
     String webDriver;
     String webDriverPath;
     WebDriver driver;
-    Connection conn = null;
 
     // Constructor
 
@@ -33,21 +32,22 @@ public class Scraper {
     // Login Method
 
     public void login() {
-        String loginURL = "https://login.yahoo.com";
-        String email = "matt.tester24";
-        String password = "112233aabbcc";
+        String URL = "https://login.yahoo.com";
+        String EMAIL = "matt.tester24";
+        String PASSWORD = "112233aabbcc";
         WebElement userEntry;
         WebElement passEntry;
 
-        driver.get(loginURL);
+
+        driver.get(URL);
         driver.manage().window().maximize();
 
         userEntry = driver.findElement(By.id("login-username"));
-        userEntry.sendKeys(email + Keys.RETURN);
+        userEntry.sendKeys(EMAIL + Keys.RETURN);
 
         passEntry = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(By.id("login-passwd")));
-        passEntry.sendKeys(password + Keys.RETURN);
+        passEntry.sendKeys(PASSWORD + Keys.RETURN);
     }
 
     // Scrape Method - Yahoo Finance Portfolio

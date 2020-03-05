@@ -2,9 +2,10 @@ package org.example;
 
 public class StockFactory {
 
+    // Need to add date + time
+
     private String symbol;
     private String lastPrice;
-    private String currency;
     private String changeDollars;
     private String changePercent;
     private String volume;
@@ -25,14 +26,6 @@ public class StockFactory {
 
     public void setLastPrice(String lastPrice) {
         this.lastPrice = lastPrice;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public String getChangeDollars() {
@@ -76,7 +69,6 @@ public class StockFactory {
     }
     public void stockReport() {
         System.out.println("Symbol: " + this.symbol);
-        System.out.println("Currency: " + this.currency);
         System.out.println("Last Price: " + this.lastPrice);
         System.out.println("Dollar Change: " + this.changeDollars);
         System.out.println("Percent Change: " + this.changePercent);
