@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Scraper {
@@ -26,15 +28,6 @@ public class Scraper {
         this.webDriver = "webdriver.chrome.driver";
         this.webDriverPath = "\"/Users/mtartaglia/Desktop/Java/Assets/chromedriver";
         this.driver = new ChromeDriver();
-
-        // Connect to DB
-
-//        try {
-//            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crypto", "admin", "admin");
-//            System.out.println("SQL Connection to database established!");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
     }
 
     // Login Method
@@ -43,27 +36,23 @@ public class Scraper {
         String loginURL = "https://login.yahoo.com";
         String email = "matt.tester24";
         String password = "112233aabbcc";
+        WebElement userEntry;
+        WebElement passEntry;
 
         driver.get(loginURL);
         driver.manage().window().maximize();
 
-        WebElement userEntry = driver.findElement(By.id("login-username"));
+        userEntry = driver.findElement(By.id("login-username"));
         userEntry.sendKeys(email + Keys.RETURN);
 
-//        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-
-        WebElement passEntry = new WebDriverWait(driver, 10)
+        passEntry = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(By.id("login-passwd")));
         passEntry.sendKeys(password + Keys.RETURN);
-
     }
 
-    // Scrape Method
+    // Scrape Method - Yahoo Finance Portfolio
 
     public void scrapePage() {
-
-        // Navigate to Yahoo Finance
-
         driver.get("https://finance.yahoo.com/portfolio/p_1/view");
 
         // Isolate Table within My Portfolio
@@ -79,6 +68,7 @@ public class Scraper {
 
         for (WebElement row : scrapeRows) {
 
+            // Replaced the 2 line breaks with ' ' + split the entire string on ' '
             String[] soloStock = row.getText().replaceAll("\\R+", " ").split(" ");
 
             // Create Stock Object
@@ -86,7 +76,6 @@ public class Scraper {
             StockFactory stock = new StockFactory();
             stock.setSymbol(soloStock[0]);
             stock.setLastPrice(soloStock[1]);
-            stock.setCurrency(soloStock[4]);
             stock.setChangeDollars(soloStock[2]);
             stock.setChangePercent(soloStock[3]);
             stock.setVolume(soloStock[7]);
@@ -108,6 +97,31 @@ public class Scraper {
     // Method to Send Stock Info to MySQL DB
 
     public void archiveScrape(StockFactory stock)  {
+
+        try {
+                Connection conn = DBConnection.getConnection();
+
+                String query = "insert into stocks (symbol, last_price, change_dollars, change_percent, volume, average_volume, market_cap)"
+                        + "values (?, ?, ?, ?, ?, ?, ?)";
+
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+
+                preparedStmt.setString(1, stock.getSymbol());
+                preparedStmt.setString(2, stock.getLastPrice());
+                preparedStmt.setString(3, stock.getChangeDollars());
+                preparedStmt.setString(4, stock.getChangePercent());
+                preparedStmt.setString(5, stock.getVolume());
+                preparedStmt.setString(6, stock.getAverageVolume());
+                preparedStmt.setString(7, stock.getMarketCap());
+
+                System.out.println("Saved to Database Successfully!");
+
+                preparedStmt.execute();
+                conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
