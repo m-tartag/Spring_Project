@@ -1,16 +1,37 @@
 package org.example;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "stocks")
 public class StockFactory {
 
     // Need to add date + time
 
+    @Column(name = "symbol")
     private String symbol;
+
+    @Column(name = "last_price")
     private String lastPrice;
+
+    @Column(name = "change_dollars")
     private String changeDollars;
+
+    @Column(name = "change_percent")
     private String changePercent;
+
+    @Column(name = "volume")
     private String volume;
+
+    @Column(name = "average_volume")
     private String averageVolume;
+
+    @Column(name = "market_cap")
     private String marketCap;
+
+    @Column(name = "scrape_date")
     private String scrapeDate;
 
 
