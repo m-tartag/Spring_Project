@@ -55,12 +55,12 @@ public class Scraper {
     public void scrapePage() {
         driver.get("https://finance.yahoo.com/portfolio/p_1/view");
 
-        // Isolate Table within My Portfolio
+        // Find Table
 
         WebElement scrapeTable = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.elementToBeClickable(By.tagName("tbody")));
 
-        // Locate Rows of Table and populate List
+        // Make List of Rows in Table
 
         List<WebElement> scrapeRows = scrapeTable.findElements(By.className("simpTblRow"));
 
@@ -68,8 +68,12 @@ public class Scraper {
 
         for (WebElement row : scrapeRows) {
 
-            // Replaced the 2 line breaks with ' ' + split the entire string on ' '
             String[] soloStock = row.getText().replaceAll("\\R+", " ").split(" ");
+
+            // Format Date
+
+            long millis = System.currentTimeMillis();
+            java.sql.Date date = new java.sql.Date(millis);
 
             // Create Stock Object
 
@@ -81,6 +85,7 @@ public class Scraper {
             stock.setVolume(soloStock[7]);
             stock.setAverageVolume(soloStock[9]);
             stock.setMarketCap(soloStock[10]);
+            stock.setScrapeDate(date.toString());
 
             // Method to Print Stocks to Console (Debugging)
 
@@ -100,8 +105,8 @@ public class Scraper {
 
         try {
                 Connection conn = DBConnection.getConnection();
-                String query = "insert into stocks (symbol, last_price, change_dollars, change_percent, volume, average_volume, market_cap)"
-                        + "values (?, ?, ?, ?, ?, ?, ?)";
+                String query = "insert into stocks (symbol, last_price, change_dollars, change_percent, volume, average_volume, market_cap, scrape_date)"
+                        + "values (?, ?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
 
@@ -112,6 +117,7 @@ public class Scraper {
                 preparedStmt.setString(5, stock.getVolume());
                 preparedStmt.setString(6, stock.getAverageVolume());
                 preparedStmt.setString(7, stock.getMarketCap());
+                preparedStmt.setString(8, stock.getScrapeDate());
 
                 System.out.println("Saved to Database Successfully!");
 

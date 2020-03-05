@@ -11,11 +11,12 @@ public class StockFactory {
     private String volume;
     private String averageVolume;
     private String marketCap;
+    private String scrapeDate;
+
 
     public String getSymbol() {
         return symbol;
     }
-
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
@@ -67,6 +68,13 @@ public class StockFactory {
     public void setMarketCap(String marketCap) {
         this.marketCap = marketCap;
     }
+    public String getScrapeDate() {
+        return scrapeDate;
+    }
+
+    public void setScrapeDate(String scrapeDate) {
+        this.scrapeDate = scrapeDate;
+    }
     public void stockReport() {
         System.out.println("Symbol: " + this.symbol);
         System.out.println("Last Price: " + this.lastPrice);
@@ -75,6 +83,7 @@ public class StockFactory {
         System.out.println("Volume: " + this.volume);
         System.out.println("Avg Volume: " + this.averageVolume);
         System.out.println("Market Cap: " + this.marketCap);
+        System.out.println("Date: " + this.scrapeDate);
         System.out.println("----------------");
     }
 }
