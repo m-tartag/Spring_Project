@@ -8,8 +8,6 @@ import javax.persistence.Table;
 @Table(name = "stocks")
 public class StockFactory {
 
-    // Need to add date + time
-
     @Column(name = "symbol")
     private String symbol;
 
