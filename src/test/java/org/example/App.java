@@ -4,7 +4,7 @@ public class App {
     public static void main(String[] args) {
         Scraper scraper = new Scraper();
         scraper.login();
-        scraper.scrapeData();
+        scraper.scrapePage();
         scraper.quitDriver();
     }
 }

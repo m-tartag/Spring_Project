@@ -9,8 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 
 public class Scraper {
@@ -31,12 +29,12 @@ public class Scraper {
 
         // Connect to DB
 
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crypto", "admin", "admin");
-            System.out.println("SQL Connection to database established!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/crypto", "admin", "admin");
+//            System.out.println("SQL Connection to database established!");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
     // Login Method
@@ -62,7 +60,7 @@ public class Scraper {
 
     // Scrape Method
 
-    public void scrapeData() {
+    public void scrapePage() {
 
         // Navigate to Yahoo Finance
 
@@ -77,13 +75,13 @@ public class Scraper {
 
         List<WebElement> scrapeRows = scrapeTable.findElements(By.className("simpTblRow"));
 
-        for (WebElement row : scrapeRows) {
+        // Iterate over each row in list / clean up the raw scrape
 
-            // Isolate Stock and Associated Fields
+        for (WebElement row : scrapeRows) {
 
             String[] soloStock = row.getText().replaceAll("\\R+", " ").split(" ");
 
-            // Instantiate Stock Objects
+            // Create Stock Object
 
             StockFactory stock = new StockFactory();
             stock.setSymbol(soloStock[0]);
@@ -99,15 +97,20 @@ public class Scraper {
 
             stock.stockReport();
 
+            // Save to database
+
+            archiveScrape(stock);
+
         }
 
     }
 
     // Method to Send Stock Info to MySQL DB
 
-    public void addScrapeToDatabase(StockFactory stock)  {
-        String query = "insert into stock (symbol, last_price, currency, change_dollars, change_percent, volume, average_volume, market_cap)" + "values (?, ?, ?, ?, ?, ?, ?, ?)";
+    public void archiveScrape(StockFactory stock)  {
+
     }
+
 
     // Quit Driver
 
