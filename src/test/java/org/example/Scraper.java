@@ -25,7 +25,7 @@ public class Scraper {
 
     public Scraper() {
         this.webDriver = "webdriver.chrome.driver";
-        this.webDriverPath = "\"/Users/mtartaglia/Desktop/Java/Assets/chromedriver";
+        this.webDriverPath = "/Users/mtartaglia/Desktop/Java/Assets/chromedriver";
         this.driver = new ChromeDriver();
     }
 
