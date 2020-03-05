@@ -32,9 +32,9 @@ public class Scraper {
     // Login Method
 
     public void login() {
-        String URL = "https://login.yahoo.com";
-        String EMAIL = "matt.tester24";
-        String PASSWORD = "112233aabbcc";
+        final String URL = "https://login.yahoo.com";
+        final String EMAIL = "matt.tester24";
+        final String PASSWORD = "112233aabbcc";
         WebElement userEntry;
         WebElement passEntry;
 
@@ -100,7 +100,6 @@ public class Scraper {
 
         try {
                 Connection conn = DBConnection.getConnection();
-
                 String query = "insert into stocks (symbol, last_price, change_dollars, change_percent, volume, average_volume, market_cap)"
                         + "values (?, ?, ?, ?, ?, ?, ?)";
 
