@@ -1,4 +1,4 @@
-package org.example;
+package example;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -137,15 +137,27 @@ public class Scraper {
     public void hibernateArchive(StockFactory stock) {
 
         SessionFactory factory = new Configuration()
-                                .configure("/org/example/hibernate.cfg.xml")
+                                .configure()
                                 .addAnnotatedClass(StockFactory.class)
                                 .buildSessionFactory();
 
-        Session session = factory.getCurrentSession();
+//        Session session = factory.getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
 
         try {
-            session.beginTransaction();
-            session.save(stock);
+            StockFactory saveStock = new StockFactory();
+
+            saveStock.setSymbol(stock.getSymbol());
+            saveStock.setLastPrice(stock.getLastPrice());
+            saveStock.setChangeDollars(stock.getChangeDollars());
+            saveStock.setChangePercent(stock.getChangePercent());
+            saveStock.setVolume(stock.getVolume());
+            saveStock.setAverageVolume(stock.getAverageVolume());
+            saveStock.setMarketCap(stock.getMarketCap());
+            saveStock.setScrapeDate(stock.getScrapeDate());
+
+            session.save(saveStock);
             session.getTransaction().commit();
         } finally {
             factory.close();
