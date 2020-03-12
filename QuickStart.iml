@@ -14,6 +14,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="example:hibernate.cfg.xml" />
+          <unit-entry name="hibernate.cfg.xml" />
           <unit-entry name="org:example:hibernate.cfg.xml" />
         </datasource-map>
         <naming-strategy-map />
