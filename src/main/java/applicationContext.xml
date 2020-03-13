@@ -10,11 +10,31 @@
 
     <!-- Define your beans here -->
     <bean id="myCoach"
+          class="spring.demo.TrackCoach">
+        <constructor-arg ref="myFortune"/>
+    </bean>
+
+    <bean id="baseballCoach"
           class="spring.demo.BaseballCoach">
     </bean>
-    <bean id="myCoach2"
-          class="spring.demo.FootballCoach"></bean>
+
+    <bean id="myFortune"
+          class="spring.demo.RandomFortuneService">
+    </bean>
+    <bean id="myCricketCoach"
+          class="spring.demo.CricketCoach">
+
+    <!--Setup Setter Injection-->~
+
+        <property name="fortuneService"
+                  ref="myFortune">
+        </property>
+    </bean>
+    <bean id="myRandomFortune"
+    class="spring.demo.RandomFortuneService">
+    </bean>
     <!-- define the dependency -->
+
 
 </beans>
 
