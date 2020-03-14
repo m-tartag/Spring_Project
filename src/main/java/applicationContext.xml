@@ -21,17 +21,22 @@
     <bean id="myFortune"
           class="spring.demo.RandomFortuneService">
     </bean>
+
     <bean id="myCricketCoach"
           class="spring.demo.CricketCoach">
 
-    <!--Setup Setter Injection-->~
+        <!--Setup Setter Injection-->
+        <property name="fortuneService" ref="myFortune"/>
+        <!--Inject Literal Values-->
 
-        <property name="fortuneService"
-                  ref="myFortune">
-        </property>
+        <property name="emailAddress" value="cricketcoach@gmail.com"/>
+        <property name="team" value="Mythicc Raiders"/>
+
     </bean>
+
+
     <bean id="myRandomFortune"
-    class="spring.demo.RandomFortuneService">
+          class="spring.demo.RandomFortuneService">
     </bean>
     <!-- define the dependency -->
 

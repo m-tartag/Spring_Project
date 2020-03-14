@@ -2,10 +2,10 @@ package spring.demo;
 
 public class CricketCoach implements Coach {
 
+    private FortuneService fortuneService;
+
     private String emailAddress;
     private String team;
-
-    private FortuneService fortuneService;
 
     // Create and no-arg constructor
 
@@ -19,11 +19,21 @@ public class CricketCoach implements Coach {
     }
 
     public void setEmailAddress(String emailAddress) {
+        System.out.println("CricketCoach: Inside Setter Method - Set Email");
         this.emailAddress = emailAddress;
     }
 
     public void setTeam(String team) {
+        System.out.println("CricketCoach: Inside Setter Method - Set Team");
         this.team = team;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public String getTeam() {
+        return team;
     }
 
     @Override
